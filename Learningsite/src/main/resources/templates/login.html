@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="png" href="" th:href="@{/image/icon/favicon.png}">
+    <title>Login SignUp</title>
+    <link rel="stylesheet" type="text/css" href="" th:href="@{/css/loginStyle.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- It will redirect to the Home Page after submitting the form -->
+    <script>
+    /*$(document).ready(function(){
+        $("form").submit(function(){
+            alert("Great Job !"); 
+        });
+    });*/
+    function login() {
+            document.getElementById("login").style.display = "block";
+            document.getElementById("register").style.display = "none";
+            document.getElementById("log").classList.add("active");
+            document.getElementById("reg").classList.remove("active");
+        }
+
+        function register() {
+            document.getElementById("login").style.display = "none";
+            document.getElementById("register").style.display = "block";
+            document.getElementById("log").classList.remove("active");
+            document.getElementById("reg").classList.add("active");
+        }
+
+        // Initialize the correct form on page load
+        document.addEventListener("DOMContentLoaded", function() {
+            var activeForm = /*[[${activeForm}]]*/ 'login';  // Fallback for first load
+            if (activeForm === 'register') {
+                register();  // Display registration form if activeForm is 'register'
+            } else {
+                login();  // Display login form if activeForm is 'login'
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="form-box">
+        <div class="button-box">
+            <div id="btn"></div>
+            <button type="button" class="toggle-btn" id="log" onclick="login()" style="color: #fff;">Log In</button>
+            <button type="button" class="toggle-btn" id="reg" onclick="register()">Register</button>
+        </div>
+        <div class="social-icons">
+            <img src="" th:src="@{/image/icon/fb2.png}">
+            <img src=""th:src="@{/image/icon/insta2.png}">
+            <img src="" th:src="@{/image/icon/tt2.png}">
+        </div>
+        
+        <!-- Login Form -->
+        <!--<form id="login" class="input-group" action="" th:action="@{/loginRequest}" method="post">
+            <div class="inp">
+                <img src="" th:src="@{/image/icon/user.png}"><input type="text" id="email" name="email" class="input-field" placeholder="Username or Phone Number" style="width: 88%; border:none;" required="required">
+            </div>
+            <div class="inp">
+                <img src="" th:src="@{/image/icon/password.png}"><input type="password" id="password" name="password" class="input-field" placeholder="Password" style="width: 88%; border: none;" required="required">
+            </div>-->
+           <!-- <input type="checkbox" class="check-box">Remember Password-->
+            <!--<button type="submit" class="submit-btn">Log In</button>
+        </form>-->
+		<!-- Login Form -->
+		<form id="login" class="input-group" action="" th:action="@{/loginRequest}" method="post">
+		    <div class="inp">
+		        <img src="" th:src="@{/image/icon/user.png}">
+		        <input type="text" id="email" name="email" class="input-field" placeholder="Username or Phone Number" style="width: 88%; border:none;" required="required">
+		    </div>
+		    <div class="inp">
+		        <img src="" th:src="@{/image/icon/password.png}">
+		        <input type="password" id="password" name="password" class="input-field" placeholder="Password" style="width: 88%; border: none;" required="required">
+		    </div><br>
+		    <!-- Error message section -->
+		    <div th:if="${errorMessage1 != null}" class="error-message1" style="color: red;">
+		        <p th:text="${errorMessage1}"></p>
+		    </div>
+		    <br>
+		    <button type="submit" class="submit-btn">Log In</button>
+		</form>
+
+        <div class="other" id="other">
+            <div class="instead">
+                <h3>or</h3>
+            </div>
+            <button class="connect" onclick="google()">
+                <img src="" th:src="@{/image/icon/google.png}"><span>Sign in with Google</span>
+            </button>
+        </div>
+        
+        <!-- Registration Form 
+        <form id="register" class="input-group" th:action="@{/register}" th:object="${user}" method="post">
+            <input type="text" class="input-field" placeholder="Full Name" name="fullname" required="required">
+            <input type="email" class="input-field" placeholder="Email Address" name="email" required="required">
+            <input type="password" class="input-field" placeholder="Create Password" name="password" required="required">
+            <input type="password" class="input-field" placeholder="Confirm Password" name="confirmpassword" required="required">
+            <input type="checkbox" class="check-box" id="chkAgree" onclick="goFurther()">I agree to the Terms & Conditions
+            <button type="submit" id="btnSubmit" class="submit-btn reg-btn">Register</button>-->
+            
+            <!-- Display error message if it exists 
+            <div th:if="${errorMessage != null}" th:text="${errorMessage}" style="color: red;"></div>
+            <div th:if="${successMessage}" class="alert alert-success" style="color: green;">
+    			<p th:text="${successMessage}"></p>
+			</div>
+        </form>-->
+        
+        <!-- Registration Form -->
+		<form id="register" class="input-group" th:action="@{/register}" th:object="${user}" method="post" th:style="${activeForm == 'register'}">
+		    <input type="text" class="input-field" placeholder="Full Name" name="fullname" required="required">
+		    <input type="email" class="input-field" placeholder="Email Address" name="email" required="required">
+		    <input type="password" class="input-field" placeholder="Create Password" name="password" required="required">
+		    <input type="password" class="input-field" placeholder="Confirm Password" name="confirmpassword" required="required">
+		    <input type="checkbox" class="check-box" id="chkAgree" onclick="goFurther()">I agree to the Terms & Conditions
+		    <button type="submit" id="btnSubmit" class="submit-btn reg-btn">Register</button>
+    
+		    <!-- Display error message if it exists -->
+		    <div th:if="${errorMessage != null}" th:text="${errorMessage}" style="color: red;"></div>
+    
+ 		   <!-- Display success message if registration was successful -->
+ 		   <div th:if="${successMessage != null}" th:text="${successMessage}" style="color: green;"></div>
+		</form>
+        
+        
+    </div>
+    <script type="text/javascript" src="" th:src="@{/js/script.js}"></script>
+</body>
+</html>
